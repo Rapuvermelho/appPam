@@ -4,15 +4,24 @@ const AppContext = createContext();
 
 export const AppProvider = ({children})=> {
 
-    const[nome,setNome] = useState('');
-    const[par,setPar] = useState('');
+    const[natual,setNatual] = useState("");
+    const[jogadores,setJogadores] = useState([]);
+    const[par,setPar] = useState([[]]);
     const[vivo,setVivo] = useState(true);
+    const[pres,setPres] = useState(false);
+    const[chan,setChan] = useState(false);
 
     return(
         <AppContext.Provider
             value={{
-                nome,
-                setNome,
+                chan,
+                setChan,
+                pres,
+                setPres,
+                natual,
+                setNatual,
+                jogadores,
+                setJogadores,
                 par,
                 setPar,
                 vivo,

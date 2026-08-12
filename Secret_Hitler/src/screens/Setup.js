@@ -2,49 +2,120 @@ import { StyleSheet,Text,View,Button,TextInput,Image } from "react-native";
 import React, {useContext,useState} from "react";
 import {useApp} from '../context/AppContext';
 import { funcs } from '../../assets/funcs';
+import MyButton from "../components/MyButton";
 
 const Setup = ({navigation}) => {
 
-    const {nome,setNome} = useApp();
+    const {natual,setNatual} = useApp();
+    const {jogadores,setJogadores} = useApp();
+    const {par,setPar} = useApp();
     const [njog,setNjog] = useState(0);
+    const [funcoes, setFuncoes] = useState([]);
+    const nfuncs = [[1,1,1,2,3,4,4,5,4,4,4,4,4,4]
+    ,[0,1,1,1,1,1,2,2,2,2,2,]
+    ,[0,0,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    ,[0,0,0,0,0,0,0,0,2,2,2,2,2,2,2],[0,0,0,0,0,0,0,0,0,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,1,1,1,1]];
+    const tfuncs = ["Liberal","Fascista","Hitler","Comunista","Capitalista","Anarquista"]; 
+    return(
+    <View>
+        <View style={styles.nbox}>
+            <Text style={styles.ttopo}>Coloque o nome do {njog + 1} jogador</Text>
+            <TextInput style={styles.tinput}
+                value={natual}
+                onChangeText={setNatual}
+                placeholder="Coloque seu nome"
+            />
+            <MyButton
+                title="Confirmar jogador"
+                onPress={confjog}
+            />
+            <View style={styles.funcsContainer}>
+                {jogadores.map((jogadores, index) => (
+                    <Text key={index}>{jogadores.nome}</Text>
+                ))}
+            </View>
+        </View>
 
-    function confjog(){
+
+        <MyButton title="Vamos sortear as funções"
+            onPress={()=> {
+                sortfunc()
+                navigation.navigate("Reveal")
+            }}
+        />
+
+
+        
+        <View style={styles.funcsContainer}>
+                {funcoes.map((func, index) => (
+                    <View key={index}>
+                        <Text>{nfuncs[index][njog-1]}-{tfuncs[index]}</Text>
+                        <Image
+                            source={funcs[func]}
+                            style={{
+                                width: 80,
+                                height: 80,
+                            }}
+                        />
+                    </View>
+                ))}
+        </View>
+   </View> )
+
+   //funcoes
+   function confjog(){
         //nao precisa switch,so um if,dai ele vai aumentado numero de player de acordo com a funcao
-        switch(njog){
-            case 1:
-
+        if(njog == 0){
+            setFuncoes(prev => [...prev, 'jub']);
+            setFuncoes(prev => [...prev, 'mag']);
+            setFuncoes(prev => [...prev, 'x']);
+            //print facismo 1 + h e 3 l
+            // 8  9 de importante e 10
         }
+        else if (njog == 8){
+            //print comunas sem capi
+            setFuncoes(prev => [...prev, 'jub']);
+        }
+        else if(njog == 9){
+            //comunas e capit
+            setFuncoes(prev => [...prev, 'mag']);
+        }
+        else if(njog == 10){
+            //comunas,capit e anaq
+            setFuncoes(prev => [...prev, 'x']);
+        }
+
+        setJogadores(prev => [...prev, 
+            {
+                nome:natual,
+                par: null,
+                vivo: true,
+                pres: false,
+                chan: false,
+
+            }]);
+        setNatual(' ');
+        
         setNjog(n => n + 1);
         
     }
 
-    return(
-    <View style={styles.container}>
-        <Text style={styles.ttopo}>Coloque o nome do {njog + 1} jogador</Text>
-        <Button title="Vamos sortear as funções"
-        onPress={()=> {navigation.navigate("Reveal")}}
-        />
-        <TextInput style={styles.ttopo}
-            value={nome}
-            onChangeText={setNome}
-            placeholder="Coloque seu nome"
-        />
-<Button
-    title="Confirmar jogador"
-    onPress={confjog}
-/>
-        
+    function sortfunc(){
+        const tempFunc = [];
+        for (let i = 0; i < nfuncs.length; i++) {
+            const qtd = nfuncs[i][njog];
 
-<Image
-    source={funcs.jub}
-    style={{
-        width: 200,
-        height: 200,
-    }}
-/>
-    </View>
-    )
-    
+            for (let j = 0; j < qtd; j++) {
+                tempFunc.push(tfuncs[i]);
+            }
+        }
+            setJogadores(prev =>
+            prev.map((jogador, index) => ({
+                ...jogador,
+                funcao: novasFuncoes[index],
+            }))
+        );
+    }
 }
 
 export default Setup
@@ -56,11 +127,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ttopo:{
-    flex: 1,
+  nbox:{
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 100,
+    paddingTop: 20,
+  },
+  ttopo:{
+    paddingTop: 10,
     fontSize: 20,
-  }
+  },
+  tinput:{
+    width: '80%',
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#333',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 18,
+    backgroundColor: 'white',
+    marginBottom: 5,
+  },
+  funcsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+},
 });
