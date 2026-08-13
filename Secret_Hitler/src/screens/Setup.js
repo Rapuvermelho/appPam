@@ -8,11 +8,10 @@ const Setup = ({navigation}) => {
 
     const {natual,setNatual} = useApp();
     const {jogadores,setJogadores} = useApp();
-    const {par,setPar} = useApp();
     const [njog,setNjog] = useState(0);
     const [funcoes, setFuncoes] = useState([]);
     const nfuncs = [[1,1,1,2,3,4,4,5,4,4,4,4,4,4]
-    ,[0,1,1,1,1,1,2,2,2,2,2,]
+    ,[0,1,1,1,1,1,2,2,2,2,2,2,2,2,2,]
     ,[0,0,1,1,1,1,1,1,1,1,1,1,1,1,1]
     ,[0,0,0,0,0,0,0,0,2,2,2,2,2,2,2],[0,0,0,0,0,0,0,0,0,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,1,1,1,1]];
     const tfuncs = ["Liberal","Fascista","Hitler","Comunista","Capitalista","Anarquista"]; 
@@ -62,6 +61,7 @@ const Setup = ({navigation}) => {
         </View>
    </View> )
 
+
    //funcoes
    function confjog(){
         //nao precisa switch,so um if,dai ele vai aumentado numero de player de acordo com a funcao
@@ -88,7 +88,7 @@ const Setup = ({navigation}) => {
         setJogadores(prev => [...prev, 
             {
                 nome:natual,
-                par: null,
+                funcao: null,
                 vivo: true,
                 pres: false,
                 chan: false,
@@ -112,7 +112,7 @@ const Setup = ({navigation}) => {
             setJogadores(prev =>
             prev.map((jogador, index) => ({
                 ...jogador,
-                funcao: novasFuncoes[index],
+                funcao: tempFunc[index],
             }))
         );
     }
@@ -134,6 +134,12 @@ const styles = StyleSheet.create({
   ttopo:{
     paddingTop: 10,
     fontSize: 20,
+    justifyContent:'center',
+  },
+  tgenerico:{
+    paddingTop: 10,
+    fontSize: 15,
+    justifyContent:'center',
   },
   tinput:{
     width: '80%',
