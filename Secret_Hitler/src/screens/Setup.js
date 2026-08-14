@@ -14,6 +14,8 @@ const Setup = ({navigation}) => {
     ,[0,1,1,1,1,1,2,2,2,2,2,2,2,2,2,]
     ,[0,0,1,1,1,1,1,1,1,1,1,1,1,1,1]
     ,[0,0,0,0,0,0,0,0,2,2,2,2,2,2,2],[0,0,0,0,0,0,0,0,0,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,1,1,1,1]];
+    const tpart = [["Liberal","Libera"],["Fascista","Fascista"],["Hitler","Fascista"],["Comunista","Comunista"],
+    ["Capitalista","Capitalista"],["Anaquista","Comunista"]]
     const tfuncs = ["Liberal","Fascista","Hitler","Comunista","Capitalista","Anarquista"]; 
     return(
     <View>
@@ -89,6 +91,7 @@ const Setup = ({navigation}) => {
             {
                 nome:natual,
                 funcao: null,
+                partido: null,
                 vivo: true,
                 pres: false,
                 chan: false,
@@ -100,19 +103,32 @@ const Setup = ({navigation}) => {
         
     }
 
+    function sortear(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+
+             [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
     function sortfunc(){
         const tempFunc = [];
         for (let i = 0; i < nfuncs.length; i++) {
-            const qtd = nfuncs[i][njog];
+            const qtd = nfuncs[i][njog-1];
 
+            
             for (let j = 0; j < qtd; j++) {
-                tempFunc.push(tfuncs[i]);
+                tempFunc.push(tfuncs[i])
+
             }
         }
+
+        sortear(tempFunc)
             setJogadores(prev =>
             prev.map((jogador, index) => ({
                 ...jogador,
                 funcao: tempFunc[index],
+                partido: tpart[tfuncs.indexOf(tempFunc[index])][1],
             }))
         );
     }

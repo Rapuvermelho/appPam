@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useApp } from "../context/AppContext";
 import Animated, {useSharedValue,useAnimatedStyle,withSpring,} from 'react-native-reanimated';
 import { Gesture, GestureDetector,GestureHandlerRootView } from 'react-native-gesture-handler';
+import MyButton from "../components/MyButton";
 
 const Reveal = ({navigation}) => {
     const { jogadores } = useApp();
@@ -42,7 +43,7 @@ const Reveal = ({navigation}) => {
                 {jogadores
                 .filter((jogador, index) =>
                     index !== jogadorAtual &&
-                    jogador.partido === jogadores[jogadorAtual].partido
+                    jogador.partido == jogadores[jogadorAtual].funcao
                 )
                 .map(jogador => (
                     <Text key={jogador.nome}>
@@ -55,8 +56,19 @@ const Reveal = ({navigation}) => {
     </Animated.View>
 </GestureDetector>
         <Text>Veja sua Função {jogadores[jogadorAtual].nome}</Text>
+
+         <MyButton title="Vamos pro próximo jogador"
+            onPress={proxjog}
+        />
     </View>
     )
+    function proxjog(){
+        if(jogadorAtual < jogadores.length-1){
+            setJogadorAtual(prev => prev + 1);
+            cardY.value = withSpring(0);
+        }
+        else navigation.navigate("Table")
+    }
 }
 
 export default Reveal
