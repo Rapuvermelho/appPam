@@ -50,8 +50,12 @@ const Table = ({navigation}) => {
 
             <Text>No momento já se passaram {cartas.LibsPass} leis liberais,faltam {5-cartas.LibsPass}</Text>
             <Text>No momento já se passaram {cartas.FascPass} leis fascistas,faltam {6-cartas.FascPass}</Text>
-            <Text>No momento já se passaram {cartas.ComuPass} leis comunistas,faltam {6-cartas.ComuPass}</Text>
-            <Text>No momento já se passaram {cartas.AnarPass} leis anarquistas,faltam {3-cartas.AnarPass}</Text>
+            {cartas.Comu > 0 &&(
+            <Text>No momento já se passaram {cartas.ComuPass} leis comunistas,faltam {6-cartas.ComuPass}
+            </Text>)}
+            {cartas.Anar > 0 &&(
+            <Text>No momento já se passaram {cartas.AnarPass} leis anarquistas,faltam {3-cartas.AnarPass}
+            </Text>)}
             
 
         </View>

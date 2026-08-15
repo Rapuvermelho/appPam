@@ -1,18 +1,20 @@
-import { StyleSheet,Text,View,Button } from "react-native";
+import { StyleSheet,Text,View,Button,Image } from "react-native";
 import React from "react";
+import trofeu from "../../assets/trofeu.jpeg";
 
-const Setup = ({navigation}) => {
+const Victory = ({navigation}) => {
     return(
     <View style={styles.container}>
-        <Text>Setup</Text>
-        <Button
-        onPress={()=> {navigation.navigate("Reveal")}}
+        <Text>Parabéns,vc ganhou</Text>
+        <Image
+            source={victoryImage}
+            style={styles.image}
         />
     </View>
     )
 }
 
-export default Setup
+export default Victory
 
 const styles = StyleSheet.create({
   container: {

@@ -3,6 +3,7 @@ import React, {useContext,useState} from "react";
 import {useApp} from '../context/AppContext';
 import { funcs } from '../../assets/funcs';
 import MyButton from "../components/MyButton";
+import sh from "../../assets/sh.webp"
 
 const Setup = ({navigation}) => {
 
@@ -65,6 +66,7 @@ const Setup = ({navigation}) => {
                     </View>
                 ))}
         </View>
+        <Image source={sh}/>
    </View> )
 
 
