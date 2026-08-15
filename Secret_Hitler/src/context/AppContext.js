@@ -6,6 +6,7 @@ export const AppProvider = ({children})=> {
 
     const[natual,setNatual] = useState("");
     const[jogadores,setJogadores] = useState([]);
+    const[cartas,setCartas] =useState([]);
 
     return(
         <AppContext.Provider
@@ -14,6 +15,8 @@ export const AppProvider = ({children})=> {
                 setNatual,
                 jogadores,
                 setJogadores,
+                cartas,
+                setCartas,
             }}
         >
             {children}

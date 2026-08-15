@@ -8,6 +8,7 @@ const Setup = ({navigation}) => {
 
     const {natual,setNatual} = useApp();
     const {jogadores,setJogadores} = useApp();
+    const {cartas,setCartas} = useApp();
     const [njog,setNjog] = useState(0);
     const [funcoes, setFuncoes] = useState([]);
     const nfuncs = [[1,1,1,2,3,4,4,5,4,4,4,4,4,4]
@@ -16,7 +17,10 @@ const Setup = ({navigation}) => {
     ,[0,0,0,0,0,0,0,0,2,2,2,2,2,2,2],[0,0,0,0,0,0,0,0,0,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,1,1,1,1]];
     const tpart = [["Liberal","Libera"],["Fascista","Fascista"],["Hitler","Fascista"],["Comunista","Comunista"],
     ["Capitalista","Capitalista"],["Anaquista","Comunista"]]
-    const tfuncs = ["Liberal","Fascista","Hitler","Comunista","Capitalista","Anarquista"]; 
+    const tfuncs = ["Liberal","Fascista","Hitler","Comunista","Capitalista","Anarquista"];
+    let cartcomu = 0
+    let cartanar = 0
+    let cartfas = 0
     return(
     <View>
         <View style={styles.nbox}>
@@ -68,24 +72,41 @@ const Setup = ({navigation}) => {
    function confjog(){
         //nao precisa switch,so um if,dai ele vai aumentado numero de player de acordo com a funcao
         if(njog == 0){
-            setFuncoes(prev => [...prev, 'jub']);
-            setFuncoes(prev => [...prev, 'mag']);
-            setFuncoes(prev => [...prev, 'x']);
+            setFuncoes(prev => [...prev, 'lib']);
+            setFuncoes(prev => [...prev, 'fas']);
+            setFuncoes(prev => [...prev, 'hit']);
             //print facismo 1 + h e 3 l
             // 8  9 de importante e 10
+            cartfas = 11
         }
         else if (njog == 8){
             //print comunas sem capi
-            setFuncoes(prev => [...prev, 'jub']);
+            setFuncoes(prev => [...prev, 'com']);
+            cartcomu = 9
+            cartfas = 9
         }
         else if(njog == 9){
             //comunas e capit
-            setFuncoes(prev => [...prev, 'mag']);
+            setFuncoes(prev => [...prev, 'cap']);
         }
         else if(njog == 10){
             //comunas,capit e anaq
-            setFuncoes(prev => [...prev, 'x']);
+            setFuncoes(prev => [...prev, 'ana']);
+            cartanar = 1
         }
+
+        setCartas({
+            Libs: 6,
+            Fasc: cartfas,
+            Comu: cartcomu,
+            Anar: cartanar,
+            LibsPass: 0,
+            FascPass: 0,
+            ComuPass: 0,
+            AnarPass: 0,
+            Desc: 0,
+            Total: 6+cartfas+cartanar+cartcomu,
+        })
 
         setJogadores(prev => [...prev, 
             {

@@ -42,7 +42,7 @@ const Reveal = ({navigation}) => {
                 Seus aliados são:{"\n"}
                 {jogadores
                 .filter((jogador, index) =>
-                    index !== jogadorAtual &&
+                    index != jogadorAtual &&
                     jogador.partido == jogadores[jogadorAtual].funcao
                 )
                 .map(jogador => (

@@ -1,5 +1,8 @@
 export const funcs = {
-    jub: require('./jub.jpg'),
-    mag: require('./mag.jpg'),
-    x: require('./x.jpg'),
+    lib: require('./lib.png'),
+    fas: require('./fas.png'),
+    com: require('./com.png'),
+    cap: require('./cap.png'),
+    ana: require('./ana.png'),
+    hit: require('./hit.png'),
 };
