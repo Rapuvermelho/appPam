@@ -22,52 +22,93 @@ const Setup = ({navigation}) => {
     let cartcomu = 0
     let cartanar = 0
     let cartfas = 0
+
     return(
-    <View>
-        <View style={styles.nbox}>
-            <Text style={styles.ttopo}>Coloque o nome do {njog + 1} jogador</Text>
-            <TextInput style={styles.tinput}
-                value={natual}
-                onChangeText={setNatual}
-                placeholder="Coloque seu nome"
-            />
-            <MyButton
-                title="Confirmar jogador"
-                onPress={confjog}
-            />
-            <View style={styles.funcsContainer}>
-                {jogadores.map((jogadores, index) => (
-                    <Text key={index}>{jogadores.nome}</Text>
-                ))}
-            </View>
-        </View>
+    <View style={styles.container}>
 
+        <Text style={styles.titulo}>
+        SECRET HITLER
+        </Text>
 
-        <MyButton title="Vamos sortear as funções"
-            onPress={()=> {
-                sortfunc()
-                navigation.navigate("Reveal")
-            }}
+        <Text style={styles.subtitulo}>
+        Configuração do jogo
+        </Text>
+
+        <View style={styles.caixaSetup}>
+
+        <Text style={styles.tituloJogador}>
+            Coloque o nome do jogador {njog + 1}
+        </Text>
+
+        <TextInput
+            style={styles.entradaNome}
+            value={natual}
+            onChangeText={setNatual}
+            placeholder="Coloque seu nome"
+            placeholderTextColor="#999"
         />
 
+        <MyButton
+            title="Confirmar jogador"
+            onPress={confjog}
+        />
 
-        
-        <View style={styles.funcsContainer}>
-                {funcoes.map((func, index) => (
-                    <View key={index}>
-                        <Text>{nfuncs[index][njog-1]}-{tfuncs[index]}</Text>
-                        <Image
-                            source={funcs[func]}
-                            style={{
-                                width: 80,
-                                height: 80,
-                            }}
-                        />
-                    </View>
-                ))}
+        <Text style={styles.tituloJogadores}>
+            Jogadores adicionados
+        </Text>
+
+        <View style={styles.listaJogadores}>
+            {jogadores.map((jogadores, index) => (
+            <View key={index} style={styles.jogador}>
+                <Text style={styles.nomeJogador}>
+                {jogadores.nome}
+                </Text>
+            </View>
+            ))}
         </View>
-        <Image source={sh}/>
-   </View> )
+
+        </View>
+
+        <Text style={styles.tituloFuncoes}>
+        Funções disponíveis
+        </Text>
+
+        <View style={styles.listaFuncoes}>
+        {funcoes.map((func, index) => (
+            <View key={index} style={styles.caixaFuncao}>
+
+            <Image
+                source={funcs[func]}
+                style={styles.imagemFuncao}
+            />
+
+            <Text style={styles.nomeFuncao}>
+                {tfuncs[index]}
+            </Text>
+
+            <Text style={styles.quantidadeFuncao}>
+                {nfuncs[index][njog - 1] || 0}
+            </Text>
+
+            </View>
+        ))}
+        </View>
+
+        <MyButton
+        title="Vamos sortear as funções"
+        onPress={() => {
+            sortfunc();
+            navigation.navigate("Reveal");
+        }}
+        />
+
+        <Image
+        source={sh}
+        style={styles.logo}
+        />
+
+    </View>
+    )
 
 
    //funcoes
@@ -160,40 +201,134 @@ const Setup = ({navigation}) => {
 export default Setup
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: 'pink',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#F4C430",
+    alignItems: "center",
+    paddingTop: 35,
+    paddingHorizontal: 15,
   },
-  nbox:{
-    alignItems: 'center',
-    paddingTop: 20,
+
+  titulo: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#2E2300",
   },
-  ttopo:{
-    paddingTop: 10,
-    fontSize: 20,
-    justifyContent:'center',
+
+  subtitulo: {
+    fontSize: 17,
+    color: "#5C4A00",
+    marginBottom: 20,
   },
-  tgenerico:{
-    paddingTop: 10,
-    fontSize: 15,
-    justifyContent:'center',
+
+  caixaSetup: {
+    width: "95%",
+    backgroundColor: "#FFF8DC",
+    borderRadius: 15,
+    padding: 18,
+    alignItems: "center",
+    elevation: 5,
   },
-  tinput:{
-    width: '80%',
-    height: 50,
-    borderWidth: 2,
-    borderColor: '#333',
+
+  tituloJogador: {
+    fontSize: 19,
+    fontWeight: "bold",
+    color: "#3A2A00",
+    marginBottom: 12,
+    textAlign: "center",
+  },
+
+  entradaNome: {
+    width: "90%",
+    height: 48,
+    borderWidth: 1,
+    borderColor: "#B99A00",
     borderRadius: 10,
     paddingHorizontal: 15,
-    fontSize: 18,
-    backgroundColor: 'white',
-    marginBottom: 5,
+    fontSize: 17,
+    backgroundColor: "white",
+    marginBottom: 10,
   },
-  funcsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-},
+
+  tituloJogadores: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#5C4A00",
+    marginTop: 15,
+    marginBottom: 8,
+  },
+
+  listaJogadores: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: 6,
+  },
+
+  jogador: {
+    backgroundColor: "#F4C430",
+    borderRadius: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+  },
+
+  nomeJogador: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#3A2A00",
+  },
+
+  tituloFuncoes: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#3A2A00",
+    marginTop: 18,
+    marginBottom: 8,
+  },
+
+  listaFuncoes: {
+    width: "100%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: 8,
+    marginBottom: 15,
+  },
+
+  caixaFuncao: {
+    width: 95,
+    height: 115,
+    backgroundColor: "#FFF8DC",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 3,
+  },
+
+  imagemFuncao: {
+    width: 80,
+    height: 80,
+    resizeMode: "contain",
+  },
+
+  nomeFuncao: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#3A2A00",
+    marginTop: 3,
+  },
+
+  quantidadeFuncao: {
+    fontSize: 12,
+    color: "#6B5700",
+  },
+
+  logo: {
+    width: 80,
+    height: 80,
+    resizeMode: "contain",
+    marginTop: 5,
+  },
+
 });

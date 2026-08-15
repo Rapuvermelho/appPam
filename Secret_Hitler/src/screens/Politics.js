@@ -13,41 +13,71 @@
       const [comprou, setComprou] = useState(false);
       const [descartes,setDescartes] = useState(0);
 
-      return(
-      <View style={styles.container}>
+return(
+    <View style={styles.container}>
+
+        <Text style={styles.titulo}>
+            Fase Política
+        </Text>
+
+        <Text style={styles.instrucao}>
+            {comprou
+                ? "Escolha uma carta para descartar"
+                : "Compre três cartas"
+            }
+        </Text>
 
         {!comprou && (
-      <MyButton 
-          title="Veja as cartas"
-          onPress={comprarCartas}
-      />
-  )}
+            <View style={styles.botaoComprar}>
+                <MyButton 
+                    title="Veja as cartas"
+                    onPress={comprarCartas}
+                />
+            </View>
+        )}
 
-  <View style={styles.cartaContainer}>
-      {mao.map((carta, index) => (
-          <Pressable
-              key={index}
-              style={[
-                  styles.carta,
-                  cartasSelecionadas.includes(index) && styles.cartaSelecionada,
-              ]}
-              onPress={() => selecionarCarta(index)}
-          >
-              <Image
-                  source={cardImages[carta]}
-                  style={styles.cartaImagem}
-              />
-          </Pressable>
-      ))}
-  </View>
-          {cartasSelecionadas.length > 0 && (
-      <MyButton
-          title="Descartar"
-          onPress={descartar}
-      />
-  )}
-      </View>
-      )
+        {comprou && (
+            <Text style={styles.aviso}>
+                Escolha uma carta
+            </Text>
+        )}
+
+        <View style={styles.cartaContainer}>
+            {mao.map((carta, index) => (
+                <Pressable
+                    key={index}
+                    style={[
+                        styles.carta,
+                        cartasSelecionadas.includes(index) &&
+                        styles.cartaSelecionada,
+                    ]}
+                    onPress={() => selecionarCarta(index)}
+                >
+                    <Image
+                        source={cardImages[carta]}
+                        style={styles.cartaImagem}
+                    />
+                </Pressable>
+            ))}
+        </View>
+
+        {cartasSelecionadas.length > 0 && (
+            <View style={styles.botaoDescartar}>
+                <MyButton
+                    title="Descartar carta"
+                    onPress={descartar}
+                />
+            </View>
+        )}
+
+        {comprou && cartasSelecionadas.length === 0 && (
+            <Text style={styles.dica}>
+                Toque em uma carta para selecioná-la
+            </Text>
+        )}
+
+    </View>
+)
 
   function comprarCartas() {
       const nCartas = [];
@@ -208,45 +238,95 @@
   export default Politics
 
   const styles = StyleSheet.create({
+
     container: {
-      flex: 1,
-      backgroundColor: 'pink',
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex: 1,
+        backgroundColor: "#F4C430",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 20,
     },
-  cartaContainer: {
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      gap: 15,
-  },
 
-  carta: {
-      width: 100,
-      height: 150,
-      borderRadius: 10,
-      backgroundColor: "white",
-      overflow: "hidden",
-      elevation: 8,
-      shadowColor: "#000",
-      shadowOffset: {
-          width: 0,
-          height: 3,
-      },
-      shadowOpacity: 0.3,
-      shadowRadius: 5,
-  },
+    titulo: {
+        fontSize: 32,
+        fontWeight: "bold",
+        color: "#3A2A00",
+        marginBottom: 8,
+        letterSpacing: 1,
+    },
 
-  cartaImagem: {
-      width: "100%",
-      height: "100%",
-      resizeMode: "cover",
-  },
-  cartaSelecionada: {
-      borderWidth: 5,
-      borderColor: "red",
-      transform: [
-          { translateY: -15 }
-      ],
-  },
-  });
+    instrucao: {
+        fontSize: 18,
+        color: "#5C4A00",
+        textAlign: "center",
+        marginBottom: 25,
+    },
+
+    aviso: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#5C4A00",
+        marginBottom: 15,
+    },
+
+    botaoComprar: {
+        marginBottom: 25,
+    },
+
+    cartaContainer: {
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 12,
+        minHeight: 180,
+    },
+
+    carta: {
+        width: 105,
+        height: 160,
+        borderRadius: 12,
+        backgroundColor: "#FFF8DC",
+        overflow: "hidden",
+
+        elevation: 8,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 6,
+    },
+
+    cartaImagem: {
+        width: "100%",
+        height: "100%",
+        resizeMode: "cover",
+    },
+
+    cartaSelecionada: {
+        borderWidth: 5,
+        borderColor: "#D32F2F",
+
+        transform: [
+            { translateY: -20 },
+            { scale: 1.03 },
+        ],
+
+        elevation: 12,
+    },
+
+    botaoDescartar: {
+        marginTop: 30,
+    },
+
+    dica: {
+        marginTop: 25,
+        fontSize: 15,
+        color: "#6B5700",
+        textAlign: "center",
+    },
+
+});
